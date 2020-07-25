@@ -1,5 +1,5 @@
 <template>
-  <div id="userLayout" :class="['user-layout-wrapper', isMobile && 'mobile']">
+  <div id="userLayout" :class="['user-layout-wrapper']">
     <div class="container">
       <div class="top">
         <div class="header">

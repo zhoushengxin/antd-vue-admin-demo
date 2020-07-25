@@ -7,6 +7,7 @@ function resolve(dir) {
 }
 
 const name = defaultSettings.title || 'vue Admin Template'
+const port = process.env.port || process.env.npm_config_port || 9528 // dev port
 // If your port is set to 80,
 // use administrator privileges to execute the command line.
 // For example, Mac: sudo npm run
@@ -40,15 +41,18 @@ module.exports = {
     },
     disableHostCheck: true,
     proxy: {
-      '/dev-api': {
-        target: 'http://ypmgapi.matepay.cc',
-        changeOrigin: true, // 用于解决跨域问题
+      // change xxx-api/login => mock/login
+      // detail: https://cli.vuejs.org/config/#devserver-proxy
+      [process.env.VUE_APP_BASE_API]: {
+        target: `http://127.0.0.1:${port}/mock`,
+        changeOrigin: true,
         pathRewrite: {
-          '^/dev-api': ''
+          ['^' + process.env.VUE_APP_BASE_API]: ''
         }
       }
-    }
-    // before: require('./mock/mock-server.js')
+    },
+    // after: require('./mock/mock-server.js')
+    before: require('./mock/mock-server.js')
   },
   configureWebpack: {
     // provide the app's title in webpack's name field, so that
