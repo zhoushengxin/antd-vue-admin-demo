@@ -13,12 +13,11 @@
         @change="handleTabClick"
       >
         <a-tab-pane key="tab1" tab="账号密码登录">
-          <a-alert v-if="isLoginError" type="error" show-icon style="margin-bottom: 24px;" message="账户或密码错误（admin/ant.design )" />
           <a-form-item>
             <a-input
               v-decorator="[
                 'username',
-                {rules: [{ required: true, message: '请输入帐户名' }], validateTrigger: 'change'}
+                {rules: [{ required: true, message: '请输入帐户名' }], validateTrigger: 'change',initialValue:'admin'}
               ]"
               size="large"
               type="text"
@@ -32,7 +31,7 @@
             <a-input
               v-decorator="[
                 'password',
-                {rules: [{ required: true, message: '请输入密码' }], validateTrigger: 'blur'}
+                {rules: [{ required: true, message: '请输入密码' }], validateTrigger: 'blur',initialValue:'123456'}
               ]"
               size="large"
               type="password"
@@ -94,6 +93,7 @@ export default {
           this.$store.dispatch('user/login', loginParams).then((res) => {
             this.loginSuccess(res)
           }).catch((err) => {
+            console.log(err)
             this.requestFailed(err)
           })
         } else {
@@ -104,7 +104,7 @@ export default {
       })
     },
     loginSuccess(res) {
-      this.$router.push({ path: '/' })
+      this.$router.push({ path: '/system' })
       // 延迟 1 秒显示欢迎信息
       setTimeout(() => {
         this.$notification.success({

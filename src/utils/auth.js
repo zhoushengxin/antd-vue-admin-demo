@@ -1,7 +1,7 @@
 import Cookies from 'js-cookie'
 
-const TokenKey = 'yunpin_token'
-const NameKey = 'yunpin_name'
+const TokenKey = 'antd_vue_demo_token'
+const NameKey = 'antd_vue_demo_name'
 
 export function getToken() {
   return Cookies.get(TokenKey)

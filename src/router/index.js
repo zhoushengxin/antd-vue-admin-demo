@@ -21,7 +21,10 @@ export const constantRoutes = [
         component: () => import(/* webpackChunkName: "user" */ '@/views/user/login')
       }
     ]
-  },
+  }
+]
+
+export const asyncRoutes = [
   {
     path: '/',
     redirect: '/dashboard',
@@ -30,8 +33,9 @@ export const constantRoutes = [
       dashboard,
       system
     ]
-
   }
+  // 404 page must be placed at the end !!!
+  // { path: '*', redirect: '/404', hidden: true }
 ]
 
 const createRouter = () => new Router({

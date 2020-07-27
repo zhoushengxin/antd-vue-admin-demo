@@ -30,16 +30,12 @@ module.exports = {
   lintOnSave: process.env.NODE_ENV === 'development',
   productionSourceMap: false,
   devServer: {
+    port: port,
     open: true,
     overlay: {
       warnings: false,
       errors: true
     },
-    https: false,
-    headers: {
-      'Access-Control-Allow-Origin': '*'
-    },
-    disableHostCheck: true,
     proxy: {
       // change xxx-api/login => mock/login
       // detail: https://cli.vuejs.org/config/#devserver-proxy
@@ -51,8 +47,7 @@ module.exports = {
         }
       }
     },
-    // after: require('./mock/mock-server.js')
-    before: require('./mock/mock-server.js')
+    after: require('./mock/mock-server.js')
   },
   configureWebpack: {
     // provide the app's title in webpack's name field, so that

@@ -7,11 +7,39 @@ const tokens = {
 
 const users = {
   'admin-token': {
-    roles: ['admin'],
     introduction: 'I am a super administrator',
     avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
     name: 'Super Admin',
-    token: ''
+    menus: [
+      {
+        'menuName': '系统管理',
+        'uri': '/system',
+        'parentId': 0,
+        'subMenus': [
+          {
+            'menuName': '员工管理',
+            'uri': '/system/index',
+            'parentId': 1,
+            'id': 2
+          }
+        ],
+        'id': 1
+      }
+      // {
+      //   'menuName': '系统管理',
+      //   'uri': '/dashboard',
+      //   'parentId': 0,
+      //   // 'subMenus': [
+      //   //   {
+      //   //     'menuName': '员工管理',
+      //   //     'uri': '/dashboard',
+      //   //     'parentId': 3,
+      //   //     'id': 4
+      //   //   }
+      //   // ],
+      //   'id': 3
+      // }
+    ]
   }
 }
 
@@ -41,11 +69,11 @@ export default [
 
   // get user info
   {
-    url: '/user/info\.*',
-    type: 'get',
+    url: '/manage/employee/userInfo',
+    type: 'post',
     response: config => {
-      const { token } = config.query
-      const info = users[token]
+      const { employeeToken } = config.body
+      const info = users[employeeToken]
 
       // mock error
       if (!info) {

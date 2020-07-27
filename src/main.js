@@ -7,6 +7,10 @@ import Antd from 'ant-design-vue'
 import 'ant-design-vue/dist/antd.css'
 import './global.less'
 
+import '@/permission'
+
+import '../mock'
+
 import App from './App.vue'
 
 Vue.use(Antd)

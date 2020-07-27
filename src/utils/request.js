@@ -1,12 +1,5 @@
 import axios from 'axios'
-// import { Message } from 'element-ui'
 import { getToken } from '@/utils/auth'
-
-// const messageLoading = null
-
-const wirteUrl = [
-  `/manage/employee/login`
-]
 
 // create an axios instance
 const service = axios.create({
@@ -14,6 +7,10 @@ const service = axios.create({
   // withCredentials: true, // send cookies when cross-domain requests
   timeout: 5000 // request timeout
 })
+
+const wirteUrl = [
+  `/manage/employee/login`
+]
 
 // request interceptor
 service.interceptors.request.use(
@@ -23,16 +20,6 @@ service.interceptors.request.use(
     config.headers = {
       'Content-Type': 'application/json'
     }
-
-    // if (!messageLoading) {
-    //   messageLoading = Message({
-    //     message: '<i class="el-message__icon el-icon-loading"></i><span class="el-message__content">正在加载中...</span>',
-    //     offset: 50,
-    //     type: 'loading',
-    //     dangerouslyUseHTMLString: true,
-    //     duration: 0
-    //   })
-    // }
 
     if (!wirteUrl.includes(config.url)) {
       if (config.data) {
@@ -72,7 +59,7 @@ service.interceptors.response.use(
     // messageLoading = null
     // Message.closeAll()
     // if the custom code is not 20000, it is judged as an error.
-    if (res.code !== '10000') {
+    if (res.code !== 20000) {
       // Message({
       //   message: res.msg || '系统错误',
       //   type: 'error',

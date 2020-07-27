@@ -1,5 +1,5 @@
 import { login, logout, getRole } from '@/api/user'
-import { getToken, setToken, removeToken, setName } from '@/utils/auth'
+import { getToken, setToken, removeToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
 import md5 from 'js-md5'
 
@@ -35,13 +35,11 @@ const mutations = {
 const actions = {
   // user login
   login({ commit }, userInfo) {
-    const { employeeName, password } = userInfo
+    const { username, password } = userInfo
     return new Promise((resolve, reject) => {
-      login({ employeeName: employeeName.trim(), password: md5(password) }).then(response => {
-        commit('SET_TOKEN', response.employeeToken)
-        commit('SET_NAME', response.employeeName)
-        setName(response.employeeName)
-        setToken(response.employeeToken)
+      login({ username: username.trim(), password: md5(password) }).then(response => {
+        commit('SET_TOKEN', response.token)
+        setToken(response.token)
         resolve()
       }).catch(error => {
         reject(error)
@@ -53,6 +51,7 @@ const actions = {
   getRole({ commit }) {
     return new Promise((resolve, reject) => {
       getRole().then(response => {
+        console.log(response)
         commit('SET_ROLES', response.menus)
         resolve(response)
       }).catch(error => {

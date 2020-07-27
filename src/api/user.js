@@ -10,7 +10,7 @@ export function login(data) {
 
 export function getRole() {
   return request({
-    url: '/manage/roleMenus/get',
+    url: '/manage/employee/userInfo',
     method: 'post'
   })
 }

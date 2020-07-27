@@ -6,37 +6,42 @@ import { asyncRoutes, constantRoutes } from '@/router'
  * @param routes asyncRoutes
  * @param roles
  */
-// export function filterAsyncRoutes(routes, roles) {
-//   if (getName() === 'admin') {
-//     const adminRoutes = routes
-//     adminRoutes.push({ path: '*', redirect: '/404', hidden: true })
-//     return adminRoutes
-//   }
-//   const res = []
-//   routes.forEach(route => {
-//     roles.forEach(role => {
-//       if (role.uri === route.path) {
-//         if (route.children.length === role.subMenus.length) {
-//           res.push(route)
-//         } else {
-//           const child = []
-//           route.children.forEach(ele => {
-//             role.subMenus.forEach(nele => {
-//               if (nele.uri === ele.path) {
-//                 child.push(ele)
-//               }
-//             })
-//           })
-//           route.children = child
-//           res.push(route)
-//         }
-//       }
-//     })
-//   })
-//   res.push({ path: '*', redirect: '/404', hidden: true })
-//   // console.log(res)
-//   return res
-// }
+export function filterAsyncRoutes(routes, roles) {
+  // if (getName() === 'admin') {
+  //   const adminRoutes = routes
+  //   adminRoutes.push({ path: '*', redirect: '/404', hidden: true })
+  //   return adminRoutes
+  // }
+  const res = []
+  routes[0].children.forEach(route => {
+    roles.forEach(role => {
+      if (role.uri === route.path) {
+        if (route.children.length === role.subMenus.length) {
+          res.push(route)
+        } else {
+          const child = []
+          if (route.children) {
+            route.children.forEach(ele => {
+              role.subMenus.forEach(nele => {
+                if (nele.uri === ele.path) {
+                  child.push(ele)
+                }
+              })
+            })
+          }
+          route.children = child
+          res.push(route)
+        }
+      }
+    })
+  })
+
+  const finaRouters = routes
+
+  finaRouters[0].children = res
+  console.log(finaRouters)
+  return finaRouters
+}
 
 const state = {
   routes: [],
@@ -53,10 +58,10 @@ const mutations = {
 const actions = {
   generateRoutes({ commit }, roles) {
     return new Promise(resolve => {
-      console.log(asyncRoutes)
-      // const accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
-      commit('SET_ROUTES', asyncRoutes)
-      resolve(asyncRoutes)
+      const accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
+      console.log()
+      commit('SET_ROUTES', accessedRoutes)
+      resolve(accessedRoutes)
     })
   }
 }
