@@ -1,5 +1,6 @@
 
 import RouteView from '@/layouts/RouteView'
+// import BasicLayout from '@/layouts/BasicLayout'
 
 export default {
   path: '/system',
@@ -14,5 +15,4 @@ export default {
       meta: { title: '系统' }
     }
   ]
-
 }

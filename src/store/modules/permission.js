@@ -1,4 +1,5 @@
 import { asyncRoutes, constantRoutes } from '@/router'
+import { } from '@/utils/generator-routers'
 // import { getName } from '@/utils/auth'
 
 /**
@@ -7,13 +8,8 @@ import { asyncRoutes, constantRoutes } from '@/router'
  * @param roles
  */
 export function filterAsyncRoutes(routes, roles) {
-  // if (getName() === 'admin') {
-  //   const adminRoutes = routes
-  //   adminRoutes.push({ path: '*', redirect: '/404', hidden: true })
-  //   return adminRoutes
-  // }
   const res = []
-  routes[0].children.forEach(route => {
+  routes.forEach(route => {
     roles.forEach(role => {
       if (role.uri === route.path) {
         if (route.children.length === role.subMenus.length) {
@@ -36,11 +32,14 @@ export function filterAsyncRoutes(routes, roles) {
     })
   })
 
-  const finaRouters = routes
-
-  finaRouters[0].children = res
-  console.log(finaRouters)
-  return finaRouters
+  // const finaRouters = routes
+  // finaRouters[0].children = res
+  // console.log(finaRouters)
+  res.push({
+    path: '*',
+    redirect: '/exception/404'
+  })
+  return res
 }
 
 const state = {
@@ -59,7 +58,6 @@ const actions = {
   generateRoutes({ commit }, roles) {
     return new Promise(resolve => {
       const accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
-      console.log()
       commit('SET_ROUTES', accessedRoutes)
       resolve(accessedRoutes)
     })

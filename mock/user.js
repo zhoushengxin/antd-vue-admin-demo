@@ -26,17 +26,9 @@ const users = {
         'id': 1
       }
       // {
-      //   'menuName': '系统管理',
+      //   'menuName': '概况',
       //   'uri': '/dashboard',
       //   'parentId': 0,
-      //   // 'subMenus': [
-      //   //   {
-      //   //     'menuName': '员工管理',
-      //   //     'uri': '/dashboard',
-      //   //     'parentId': 3,
-      //   //     'id': 4
-      //   //   }
-      //   // ],
       //   'id': 3
       // }
     ]

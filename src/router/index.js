@@ -21,19 +21,24 @@ export const constantRoutes = [
         component: () => import(/* webpackChunkName: "user" */ '@/views/user/login')
       }
     ]
+  },
+  {
+    path: '/404',
+    component: () => import(/* webpackChunkName: "fail" */ '@/views/exception/404')
   }
 ]
 
 export const asyncRoutes = [
   {
     path: '/',
-    redirect: '/dashboard',
+    redirect: '/system/index',
     component: BasicLayout,
     children: [
-      dashboard,
-      system
+      system,
+      dashboard
     ]
   }
+
   // 404 page must be placed at the end !!!
   // { path: '*', redirect: '/404', hidden: true }
 ]
