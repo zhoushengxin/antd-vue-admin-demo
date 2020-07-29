@@ -18,15 +18,17 @@ router.beforeEach(async(to, from, next) => {
       next({ path: '/' })
       NProgress.done()
     } else {
-      const hasRoles = store.getters.roles && store.getters.roles.length > 0
+      const hasRoles = store.state.permission.routes.length
       if (hasRoles) {
         next()
       } else {
         try {
-          const { menus } = await store.dispatch('user/getRole')
-          const accessRoutes = await store.dispatch('permission/generateRoutes', menus)
-          router.addRoutes(accessRoutes)
-          next({ ...to, replace: true })
+          store.dispatch('user/getRole').then(() => {
+            store.dispatch('permission/generateRoutes').then(accessedRoutes => {
+              router.addRoutes(accessedRoutes)
+              next({ ...to, replace: true })
+            })
+          })
         } catch (error) {
           await store.dispatch('user/resetToken')
           message.error(error || 'Has Error')

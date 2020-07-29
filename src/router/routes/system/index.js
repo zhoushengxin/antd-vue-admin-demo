@@ -6,13 +6,13 @@ export default {
   path: '/system',
   component: RouteView,
   redirect: '/system/index',
-  meta: { title: '系统管理' },
+  meta: { title: '系统管理', permission: ['/system'] },
   children: [
     {
       path: '/system/index',
       name: 'system',
       component: () => import('@/views/system/index'),
-      meta: { title: '系统' }
+      meta: { title: '系统', permission: ['/system/index'] }
     }
   ]
 }

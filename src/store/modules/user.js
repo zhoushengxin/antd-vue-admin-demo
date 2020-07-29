@@ -7,8 +7,7 @@ const getDefaultState = () => {
   return {
     token: getToken(),
     name: '',
-    avatar: '',
-    roles: []
+    avatar: ''
   }
 }
 
@@ -51,8 +50,7 @@ const actions = {
   getRole({ commit }) {
     return new Promise((resolve, reject) => {
       getRole().then(response => {
-        console.log(response)
-        commit('SET_ROLES', response.menus)
+        commit('SET_PERMISSION_TREE', response.menus)
         resolve(response)
       }).catch(error => {
         reject(error)

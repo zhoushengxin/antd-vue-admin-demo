@@ -1,53 +1,25 @@
 import { asyncRoutes, constantRoutes } from '@/router'
-import { } from '@/utils/generator-routers'
-// import { getName } from '@/utils/auth'
-
-/**
- * Filter asynchronous routing tables by recursion
- * @param routes asyncRoutes
- * @param roles
- */
-export function filterAsyncRoutes(routes, roles) {
-  const res = []
-  routes.forEach(route => {
-    roles.forEach(role => {
-      if (role.uri === route.path) {
-        if (route.children.length === role.subMenus.length) {
-          res.push(route)
-        } else {
-          const child = []
-          if (route.children) {
-            route.children.forEach(ele => {
-              role.subMenus.forEach(nele => {
-                if (nele.uri === ele.path) {
-                  child.push(ele)
-                }
-              })
-            })
-          }
-          route.children = child
-          res.push(route)
-        }
-      }
-    })
-  })
-
-  // const finaRouters = routes
-  // finaRouters[0].children = res
-  // console.log(finaRouters)
-  res.push({
-    path: '*',
-    redirect: '/exception/404'
-  })
-  return res
-}
+import { generatorDynamicRouter, flatPermission } from '@/utils/generator-routers'
 
 const state = {
+  tree: [],
   routes: [],
   addRoutes: []
 }
 
+const getters = {
+  permissionList(state) {
+    return state.tree.length ? flatPermission(state.tree) : []
+  },
+  permissionUriList(state, getters) {
+    return getters.permissionList.map(permission => permission.uri)
+  }
+}
+
 const mutations = {
+  SET_PERMISSION_TREE: (state, tree) => {
+    state.tree = tree
+  },
   SET_ROUTES: (state, routes) => {
     state.addRoutes = routes
     state.routes = constantRoutes.concat(routes)
@@ -55,9 +27,9 @@ const mutations = {
 }
 
 const actions = {
-  generateRoutes({ commit }, roles) {
+  generateRoutes({ commit }) {
     return new Promise(resolve => {
-      const accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
+      const accessedRoutes = generatorDynamicRouter(asyncRoutes)
       commit('SET_ROUTES', accessedRoutes)
       resolve(accessedRoutes)
     })
@@ -67,6 +39,7 @@ const actions = {
 export default {
   namespaced: true,
   state,
+  getters,
   mutations,
   actions
 }
