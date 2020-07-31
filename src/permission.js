@@ -24,7 +24,7 @@ router.beforeEach(async(to, from, next) => {
       } else {
         try {
           store.dispatch('user/getRole').then(() => {
-            store.dispatch('permission/generateRoutes').then(accessedRoutes => {
+            store.dispatch('generateRoutes').then(accessedRoutes => {
               router.addRoutes(accessedRoutes)
               next({ ...to, replace: true })
             })

@@ -50,7 +50,7 @@ const actions = {
   getRole({ commit }) {
     return new Promise((resolve, reject) => {
       getRole().then(response => {
-        commit('SET_PERMISSION_TREE', response.menus)
+        commit('SET_PERMISSION_TREE', response.menus, { root: true })
         resolve(response)
       }).catch(error => {
         reject(error)

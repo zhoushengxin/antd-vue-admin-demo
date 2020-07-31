@@ -1,6 +1,6 @@
 <template>
   <a-layout-sider v-model="collapsed" :trigger="null" collapsible>
-    <div class="logo" />
+    <!-- <div class="logo" /> -->
     <a-menu theme="dark" mode="inline" :default-selected-keys="['1']">
       <a-menu-item key="1">
         <a-icon type="user" />
@@ -28,9 +28,15 @@ export default {
     }
   },
   computed: {
+    mainMenus() {
+      const { routes } = this.$store.getters
+      console.log(routes)
+      return routes
+    }
+  },
+  created() {
 
   },
-
   methods: {
 
   }
