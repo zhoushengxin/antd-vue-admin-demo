@@ -19,6 +19,9 @@
 </template>
 
 <script>
+
+import { mapState } from 'vuex'
+
 export default {
   name: 'AppSider',
   data() {
@@ -28,14 +31,13 @@ export default {
     }
   },
   computed: {
-    mainMenus() {
-      const { routes } = this.$store.getters
-      console.log(routes)
-      return routes
-    }
+    ...mapState({
+      // 动态主路由
+      mainMenu: state => state.permission.routes
+    })
   },
   created() {
-
+    console.log(this.mainMenu)
   },
   methods: {
 
