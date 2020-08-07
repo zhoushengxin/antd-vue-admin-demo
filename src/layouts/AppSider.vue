@@ -1,31 +1,55 @@
 <template>
   <a-layout-sider v-model="collapsed" :trigger="null" collapsible>
-    <!-- <div class="logo" /> -->
-    <a-menu theme="dark" mode="inline" :default-selected-keys="['1']">
-      <a-menu-item key="1">
-        <a-icon type="user" />
-        <span>nav 1</span>
-      </a-menu-item>
-      <a-menu-item key="2">
-        <a-icon type="video-camera" />
-        <span>nav 2</span>
-      </a-menu-item>
-      <a-menu-item key="3">
-        <a-icon type="upload" />
-        <span>nav 3</span>
-      </a-menu-item>
-    </a-menu>
+
+    <div>
+      <a-menu
+        :default-selected-keys="['1']"
+        :default-open-keys="['2']"
+        mode="inline"
+        theme="dark"
+        :inline-collapsed="collapsed"
+      >
+        <template v-for="item in list">
+          <a-menu-item v-if="!item.children" :key="item.key">
+            <a-icon type="pie-chart" />
+            <span>{{ item.title }}</span>
+          </a-menu-item>
+          <sub-menu v-else :key="item.key" :menu-info="item" />
+        </template>
+      </a-menu>
+    </div>
   </a-layout-sider>
 </template>
 
 <script>
 
 import { mapState } from 'vuex'
+import SubMenu from './SubMenu'
 
 export default {
   name: 'AppSider',
+  components: {
+    SubMenu
+  },
   data() {
     return {
+      list: [
+        {
+          key: '1',
+          title: 'Option 1'
+        },
+        {
+          key: '2',
+          title: 'Navigation 2',
+          children: [
+            {
+              key: '2.1',
+              title: 'Navigation 3',
+              children: [{ key: '2.1.1', title: 'Option 2.1.1' }]
+            }
+          ]
+        }
+      ],
       subMenuOpenKeys: [],
       collapsed: false
     }
@@ -40,7 +64,9 @@ export default {
     console.log(this.mainMenu)
   },
   methods: {
-
+    toggleCollapsed() {
+      this.collapsed = !this.collapsed
+    }
   }
 }
 </script>
