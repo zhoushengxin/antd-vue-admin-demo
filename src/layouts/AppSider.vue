@@ -3,18 +3,18 @@
 
     <div>
       <a-menu
-        :default-selected-keys="['1']"
-        :default-open-keys="['2']"
         mode="inline"
         theme="dark"
         :inline-collapsed="collapsed"
+        :selected-keys="[mainMenuSelectedKey]"
+        @click="handleClick"
       >
-        <template v-for="item in list">
-          <a-menu-item v-if="!item.children" :key="item.key">
+        <template v-for="item in mainMenu">
+          <a-menu-item v-if="!item.children" :key="item.path">
             <a-icon type="pie-chart" />
-            <span>{{ item.title }}</span>
+            <span>{{ item.meta.title }}</span>
           </a-menu-item>
-          <sub-menu v-else :key="item.key" :menu-info="item" />
+          <sub-menu v-else :key="item.path" :menu-info="item" />
         </template>
       </a-menu>
     </div>
@@ -33,39 +33,25 @@ export default {
   },
   data() {
     return {
-      list: [
-        {
-          key: '1',
-          title: 'Option 1'
-        },
-        {
-          key: '2',
-          title: 'Navigation 2',
-          children: [
-            {
-              key: '2.1',
-              title: 'Navigation 3',
-              children: [{ key: '2.1.1', title: 'Option 2.1.1' }]
-            }
-          ]
-        }
-      ],
-      subMenuOpenKeys: [],
+      mainMenuSelectedKey: [],
       collapsed: false
     }
   },
   computed: {
     ...mapState({
       // 动态主路由
-      mainMenu: state => state.permission.routes
+      mainMenu: state => state.permission.addRoutes[0].children
     })
   },
   created() {
-    console.log(this.mainMenu)
+    this.mainMenuSelectedKey = this.$route.path
   },
   methods: {
     toggleCollapsed() {
       this.collapsed = !this.collapsed
+    },
+    handleClick({ key }) {
+      this.$router.push(key)
     }
   }
 }

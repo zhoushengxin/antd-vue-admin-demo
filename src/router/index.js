@@ -34,8 +34,8 @@ export const asyncRoutes = [
     redirect: '/system/index',
     component: BasicLayout,
     children: [
-      system,
-      dashboard
+      dashboard,
+      system
     ]
   }
 
@@ -50,6 +50,11 @@ const createRouter = () => new Router({
 })
 
 const router = createRouter()
+
+const originalPush = Router.prototype.push
+Router.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch(err => err)
+}
 
 // Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
 export function resetRouter() {

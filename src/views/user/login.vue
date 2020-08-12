@@ -104,7 +104,6 @@ export default {
       })
     },
     loginSuccess(res) {
-      this.$router.push({ path: '/system' })
       // 延迟 1 秒显示欢迎信息
       setTimeout(() => {
         this.$notification.success({
@@ -112,6 +111,7 @@ export default {
         })
       }, 1000)
       this.isLoginError = false
+      this.$router.push({ path: '/system' })
     },
     requestFailed(err) {
       this.isLoginError = true
