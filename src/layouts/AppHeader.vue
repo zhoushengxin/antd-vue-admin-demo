@@ -1,10 +1,37 @@
 <template>
-  <a-layout-header style="background: #fff; padding: 0">
+  <a-layout-header class="app-header">
     <a-icon
       class="trigger"
       :type="collapsed ? 'menu-unfold' : 'menu-fold'"
-      @click="() => (collapsed = !collapsed)"
+      @click="toggleSideBar"
     />
+
+    <div class="right-menu">
+      <a-dropdown placement="bottomRight">
+        <span>
+          <a-avatar size="small" src="https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png" />
+          <span class="nick-name">admin</span>
+        </span>
+        <template v-slot:overlay>
+          <a-menu class="ant-pro-drop-down menu" :selected-keys="[]">
+            <a-menu-item key="center">
+              <a-icon type="user" />
+              个人中心
+            </a-menu-item>
+            <a-menu-item key="settings">
+              <a-icon type="setting" />
+              个人设置
+            </a-menu-item>
+            <a-menu-divider />
+            <a-menu-item key="logout">
+              <a-icon type="logout" />
+              退出登录
+            </a-menu-item>
+          </a-menu>
+        </template>
+      </a-dropdown>
+    </div>
+
   </a-layout-header>
 </template>
 
@@ -20,12 +47,17 @@ export default {
   },
   data() {
     return {
-      collapsed: false
     }
   },
   computed: {
+    collapsed() {
+      return this.$store.state.app.sidebar.opened
+    }
   },
   methods: {
+    toggleSideBar() {
+      this.$store.dispatch('app/toggleSideBar')
+    },
     handleMenu({ key }) {
       if (key === '/logout') {
         this.logout()
@@ -49,59 +81,26 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.app-header {
-  position: fixed;
-  top: 0;
-  right: 0;
-  z-index: 9;
-  width: 100%;
-  height: 56px;
-  padding: 0 20px;
-  line-height: 56px;
+
+.app-header{
   background-color: #fff;
-  border-bottom: 1px solid #eee;
-  transition: width 0.2s;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
-  .ant-layout-has-sider & {
-    width: calc(100% - 100px);
-  }
+.trigger{
+  height: 50px;
+  width: 30px;
+  line-height: 50px;
+}
 
-  .ant-layout-has-sider.has-sider-sub & {
-    width: calc(100% - 224px);
-  }
-
-  .app-breadcrumb {
-    float: left;
-    line-height: 56px;
-  }
-
-  &-menu {
-    float: left;
-    margin-right: 20px;
-    line-height: 55px;
-    border-bottom: none;
-
-    & > .ant-menu-item,
-    & > .ant-menu-item-active,
-    & > .ant-menu-item:hover {
-      top: 0;
-      border-bottom: none;
-    }
-  }
-
-  .app-user {
-    float: left;
-    cursor: pointer;
-
-    &__avatar {
-      margin-top: -0.1em;
-    }
-
-    &__name {
-      display: inline-block;
-      margin: 0 8px;
-      line-height: 56px;
-    }
+.right-menu{
+  float: right;
+  height: 100%;
+  .nick-name{
+    margin-left: 10px;
   }
 }
 </style>

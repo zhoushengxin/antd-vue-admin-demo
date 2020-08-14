@@ -33,23 +33,24 @@ export default {
   },
   data() {
     return {
-      mainMenuSelectedKey: [],
-      collapsed: false
     }
   },
   computed: {
     ...mapState({
       // 动态主路由
       mainMenu: state => state.permission.addRoutes[0].children
-    })
+    }),
+    mainMenuSelectedKey() {
+      return this.$route.path
+    },
+    collapsed() {
+      return this.$store.state.app.sidebar.opened
+    }
   },
   created() {
-    this.mainMenuSelectedKey = this.$route.path
+    // this.mainMenuSelectedKey = this.$route.path
   },
   methods: {
-    toggleCollapsed() {
-      this.collapsed = !this.collapsed
-    },
     handleClick({ key }) {
       this.$router.push(key)
     }
