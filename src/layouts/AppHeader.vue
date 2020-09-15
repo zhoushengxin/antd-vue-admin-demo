@@ -6,6 +6,18 @@
       @click="toggleSideBar"
     />
 
+    <div class="breadcrumb">
+      <a-breadcrumb>
+        <a-breadcrumb-item v-for="(item, index) in breadList" :key="item.name">
+          <router-link
+            v-if="item.name != name && index != 1"
+            :to="{ path: item.path === '' ? '/' : item.path }"
+          >{{ item.meta.title }}</router-link>
+          <span v-else>{{ item.meta.title }}</span>
+        </a-breadcrumb-item>
+      </a-breadcrumb>
+    </div>
+
     <div class="right-menu">
       <a-dropdown placement="bottomRight">
         <span>
@@ -37,6 +49,8 @@
 
 <script>
 
+import { mapState } from 'vuex'
+
 export default {
   name: 'AppHeader',
   props: {
@@ -47,14 +61,36 @@ export default {
   },
   data() {
     return {
+      basePath: '/components/breadcrumb',
+      name: '',
+      breadList: []
     }
   },
   computed: {
     collapsed() {
       return this.$store.state.app.sidebar.opened
+    },
+    ...mapState({
+      // 动态主路由
+      mainMenu: state => state.permission.addRoutes[0].children
+    })
+  },
+  watch: {
+    $route() {
+      this.getBreadcrumb()
     }
   },
+  created() {
+    this.getBreadcrumb()
+  },
   methods: {
+    getBreadcrumb() {
+      this.breadList = []
+      this.name = this.$route.name
+      this.$route.matched.forEach(item => {
+        this.breadList.push(item)
+      })
+    },
     toggleSideBar() {
       this.$store.dispatch('app/toggleSideBar')
     },
@@ -90,10 +126,15 @@ export default {
   align-items: center;
 }
 
+.breadcrumb{
+  flex: 1;
+  // text-align: left;
+}
+
 .trigger{
-  height: 50px;
+  // height: 50px;
   width: 30px;
-  line-height: 50px;
+  // line-height: 50px;
 }
 
 .right-menu{

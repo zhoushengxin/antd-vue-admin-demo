@@ -17,8 +17,14 @@ const users = {
         'parentId': 0,
         'subMenus': [
           {
-            'menuName': '员工管理',
+            'menuName': '系统',
             'uri': '/system/index',
+            'parentId': 1,
+            'id': 2
+          },
+          {
+            'menuName': '系统2',
+            'uri': '/system/index2',
             'parentId': 1,
             'id': 2
           }

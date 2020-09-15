@@ -13,6 +13,12 @@ export default {
       name: 'system',
       component: () => import('@/views/system/index'),
       meta: { title: '系统', permission: ['/system/index'] }
+    },
+    {
+      path: '/system/index2',
+      name: 'system',
+      component: () => import('@/views/system/index'),
+      meta: { title: '系统2', permission: ['/system/index'] }
     }
   ]
 }
