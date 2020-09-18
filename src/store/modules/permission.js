@@ -31,6 +31,7 @@ export default {
     generateRoutes({ commit }) {
       return new Promise(resolve => {
         const accessedRoutes = generatorDynamicRouter(asyncRoutes)
+        console.log(accessedRoutes)
         commit('SET_ROUTES', accessedRoutes)
         resolve(accessedRoutes)
       })

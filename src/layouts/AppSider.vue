@@ -1,5 +1,12 @@
 <template>
-  <a-layout-sider v-model="collapsed" :trigger="null" collapsible>
+  <a-layout-sider v-model="collapsed" :trigger="null" collapsible width="256px">
+
+    <div class="logo">
+      <router-link to="/">
+        <img src="../assets/logo.png" alt="">
+        <h1 v-if="!collapsed">Ant Design Pro</h1>
+      </router-link>
+    </div>
 
     <div>
       <a-menu
@@ -65,6 +72,31 @@ export default {
   padding: 0 24px;
   cursor: pointer;
   transition: color 0.3s;
+}
+
+.logo{
+
+  transition: all 0.5s;
+  height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  .router-link-active{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    img{
+      width: 32px;
+      height: 32px;
+    }
+    h1{
+      color: #fff;
+      font-size: 16px;
+      margin: 0 0 0 12px;
+      font-weight: 400;
+    }
+  }
+
 }
 
 </style>

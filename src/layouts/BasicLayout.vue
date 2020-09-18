@@ -1,6 +1,6 @@
 <template>
   <a-layout class="app">
-    <app-sider />
+    <app-sider class="app-sider" />
     <a-layout class="app-main">
       <app-header :breadcrumbs="breadcrumbs" />
       <a-layout-content class="app-content">
@@ -50,6 +50,10 @@ export default {
 .app {
   height: auto;
   overflow-x: hidden;
+
+  &-sider{
+    // width: 256px!important;
+  }
 
   &-main {
     min-height: 100vh;

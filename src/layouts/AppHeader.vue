@@ -87,8 +87,11 @@ export default {
     getBreadcrumb() {
       this.breadList = []
       this.name = this.$route.name
+      console.log(this.$route)
       this.$route.matched.forEach(item => {
-        this.breadList.push(item)
+        if (item.path) {
+          this.breadList.push(item)
+        }
       })
     },
     toggleSideBar() {
