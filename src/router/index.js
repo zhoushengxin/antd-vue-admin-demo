@@ -6,8 +6,9 @@ Vue.use(Router)
 import UserLayout from '@/layouts/UserLayout'
 import BasicLayout from '@/layouts/BasicLayout'
 
-import system from './routes/system'
 import dashboard from './routes/dashboard'
+import system from './routes/system'
+import order from './routes/order'
 
 export const constantRoutes = [
   {
@@ -35,7 +36,8 @@ export const asyncRoutes = [
     component: BasicLayout,
     children: [
       dashboard,
-      system
+      system,
+      order
     ]
   }
 

@@ -30,13 +30,27 @@ const users = {
           }
         ],
         'id': 1
+      },
+      {
+        'menuName': '订单管理',
+        'uri': '/order',
+        'parentId': 0,
+        'id': 3,
+        'subMenus': [
+          {
+            'menuName': '订单1',
+            'uri': '/order/index',
+            'parentId': 1,
+            'id': 2
+          },
+          {
+            'menuName': '订单2',
+            'uri': '/order/index2',
+            'parentId': 1,
+            'id': 2
+          }
+        ]
       }
-      // {
-      //   'menuName': '概况',
-      //   'uri': '/dashboard',
-      //   'parentId': 0,
-      //   'id': 3
-      // }
     ]
   }
 }

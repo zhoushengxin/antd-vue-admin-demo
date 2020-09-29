@@ -54,6 +54,11 @@ export default {
       return this.$store.state.app.sidebar.opened
     }
   },
+  watch: {
+    $route: function() {
+      this.updateMenu()
+    }
+  },
   created() {
     // this.mainMenuSelectedKey = this.$route.path
   },
